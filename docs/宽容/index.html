@@ -96,19 +96,39 @@
         }
 
         .content-header {
-            padding: 20px 30px;
+            padding: 15px 30px;
             background-color: #fff;
             border-bottom: 1px solid #e0e0e0;
             display: flex;
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
         }
 
         .content-header h2 {
-            font-size: 24px;
+            font-size: 20px;
             color: #2c3e50;
             margin: 0;
+            flex: 1;
+            text-align: center;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .view-toggle {
@@ -193,26 +213,17 @@
         }
 
         /* 导航按钮 */
-        .content-footer {
-            padding: 20px 30px;
-            background-color: #fff;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
-        }
-
         .nav-btn {
-            padding: 12px 24px;
+            padding: 8px 16px;
             border: 2px solid #3498db;
             background-color: #fff;
             color: #3498db;
             cursor: pointer;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s ease;
             font-weight: 500;
+            white-space: nowrap;
         }
 
         .nav-btn:hover:not(:disabled) {
@@ -221,18 +232,10 @@
         }
 
         .nav-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             border-color: #bdc3c7;
             color: #bdc3c7;
-        }
-
-        .nav-btn-prev {
-            margin-right: auto;
-        }
-
-        .nav-btn-next {
-            margin-left: auto;
         }
 
         /* 响应式设计 */
@@ -248,6 +251,33 @@
 
             .content-area {
                 height: calc(100vh - 200px);
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                padding: 15px 20px;
+            }
+
+            .header-left {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .content-header h2 {
+                font-size: 18px;
+                text-align: center;
+                order: -1;
+            }
+
+            .nav-btn {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .header-right {
+                justify-content: center;
             }
         }
 
@@ -297,20 +327,23 @@
         <!-- 右侧内容区 -->
         <div class="content-area">
             <div class="content-header">
-                <h2 id="currentChapterTitle">请选择章节</h2>
-                <div class="view-toggle">
-                    <button class="toggle-btn active" id="btnOriginal" onclick="switchView('original')">原文</button>
-                    <button class="toggle-btn" id="btnSummary" onclick="switchView('summary')">摘要</button>
+                <div class="header-left">
+                    <button class="nav-btn nav-btn-prev" id="btnPrev" onclick="navigateChapter(-1)" disabled>← 上一章</button>
+                    <h2 id="currentChapterTitle">请选择章节</h2>
+                    <button class="nav-btn nav-btn-next" id="btnNext" onclick="navigateChapter(1)" disabled>下一章 →</button>
+                </div>
+                <div class="header-right">
+                    <div class="view-toggle">
+                        <button class="toggle-btn active" id="btnOriginal" onclick="switchView('original')">原文</button>
+                        <!-- 暂时隐藏摘要按钮，因为txt文件不包含摘要 -->
+                        <!-- <button class="toggle-btn" id="btnSummary" onclick="switchView('summary')">摘要</button> -->
+                    </div>
                 </div>
             </div>
             <div class="content-body" id="contentBody">
                 <div class="empty-state">
                     请从左侧选择章节开始阅读
                 </div>
-            </div>
-            <div class="content-footer" id="contentFooter" style="display: none;">
-                <button class="nav-btn nav-btn-prev" id="btnPrev" onclick="navigateChapter(-1)" disabled>← 上一章</button>
-                <button class="nav-btn nav-btn-next" id="btnNext" onclick="navigateChapter(1)" disabled>下一章 →</button>
             </div>
         </div>
     </div>
@@ -320,14 +353,14 @@
         let currentChapterIndex = null;
         let currentView = 'original'; // 'original' 或 'summary'
 
-        // 加载JSON数据
+        // 加载章节索引数据
         async function loadBookData() {
             let jsonPath = '';
             try {
                 // 基于当前页面路径构建JSON文件URL
                 const currentPath = window.location.pathname;
                 const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-                const jsonFileName = '宽容.json';
+                const jsonFileName = 'chapters_index.json';
                 jsonPath = basePath + encodeURIComponent(jsonFileName);
                 
                 // 添加随机数参数防止缓存
@@ -335,7 +368,7 @@
                 const cacheBuster = separator + '_=' + Date.now() + Math.random();
                 jsonPath = jsonPath + cacheBuster;
                 
-                console.log('尝试加载JSON:', jsonPath);
+                console.log('尝试加载章节索引:', jsonPath);
                 
                 const response = await fetch(jsonPath);
                 
@@ -344,7 +377,7 @@
                 }
                 
                 bookData = await response.json();
-                console.log('JSON加载成功，章节数:', bookData.chapters?.length || 0);
+                console.log('章节索引加载成功，文件数:', bookData.chapters?.length || 0);
                 renderChapterTree();
                 updateBookInfo();
             } catch (error) {
@@ -354,7 +387,7 @@
                 document.getElementById('chapterTree').innerHTML = 
                     `<div style="padding: 20px; color: #e74c3c;">
                         <p><strong>加载失败:</strong> ${errorMsg}</p>
-                        <p style="font-size: 12px; margin-top: 10px;">请确保JSON文件与HTML文件在同一目录下</p>
+                        <p style="font-size: 12px; margin-top: 10px;">请确保chapters_index.json文件与HTML文件在同一目录下</p>
                         <p style="font-size: 11px; margin-top: 5px; color: #7f8c8d;">
                             当前URL: ${currentUrl}<br>
                             尝试的路径: ${jsonPath || 'N/A'}
@@ -367,7 +400,7 @@
         function updateBookInfo() {
             if (bookData) {
                 document.getElementById('bookName').textContent = bookData.book_name || '宽容';
-                document.getElementById('chapterCount').textContent = bookData.total_chapters || 0;
+                document.getElementById('chapterCount').textContent = bookData.total_files || bookData.total_chapters || 0;
             }
         }
 
@@ -381,12 +414,11 @@
 
             let html = '';
             bookData.chapters.forEach(chapter => {
-                const totalChunks = chapter.total_chunks || 0;
                 html += `
-                    <div class="chapter-item" onclick="selectChapter(${chapter.chapter_index})" 
-                         data-chapter-index="${chapter.chapter_index}">
-                        <div class="chapter-title">${chapter.chapter_title}</div>
-                        <div class="chapter-meta">${totalChunks} 段</div>
+                    <div class="chapter-item" onclick="selectChapter(${chapter.index})" 
+                         data-chapter-index="${chapter.index}">
+                        <div class="chapter-title">${chapter.title}</div>
+                        <div class="chapter-meta">${chapter.num}</div>
                     </div>
                 `;
             });
@@ -402,62 +434,86 @@
             document.querySelectorAll('.chapter-item').forEach(item => {
                 item.classList.remove('active');
             });
-            document.querySelector(`[data-chapter-index="${chapterIndex}"]`).classList.add('active');
+            const item = document.querySelector(`[data-chapter-index="${chapterIndex}"]`);
+            if (item) {
+                item.classList.add('active');
+            }
 
             // 显示章节内容
             displayChapterContent(chapterIndex);
         }
 
         // 显示章节内容
-        function displayChapterContent(chapterIndex) {
-            const chapter = bookData.chapters.find(ch => ch.chapter_index === chapterIndex);
+        async function displayChapterContent(chapterIndex) {
+            const chapter = bookData.chapters.find(ch => ch.index === chapterIndex);
             if (!chapter) {
                 return;
             }
 
             // 更新标题
-            document.getElementById('currentChapterTitle').textContent = chapter.chapter_title;
+            document.getElementById('currentChapterTitle').textContent = chapter.title;
 
-            // 显示内容
-            updateContent();
+            // 显示加载状态
+            document.getElementById('contentBody').innerHTML = 
+                '<div class="loading"><div class="spinner"></div><span>加载中...</span></div>';
+
+            // 加载内容
+            await loadChapterContent(chapter);
 
             // 更新导航按钮状态
             updateNavigationButtons();
         }
 
+        // 从文件加载章节内容
+        async function loadChapterContent(chapter) {
+            try {
+                const currentPath = window.location.pathname;
+                const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                const filePath = basePath + '章节目录/' + encodeURIComponent(chapter.fileName);
+                
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`加载文件失败: ${response.status}`);
+                }
+                
+                const text = await response.text();
+                currentChapterContent = text;
+                
+                // 更新内容显示
+                updateContent();
+            } catch (error) {
+                console.error('加载章节内容失败:', error);
+                document.getElementById('contentBody').innerHTML = 
+                    `<div class="empty-state">加载失败: ${error.message}</div>`;
+            }
+        }
+
+        let currentChapterContent = '';
+
         // 更新内容显示
         function updateContent() {
-            if (currentChapterIndex === null) {
-                document.getElementById('contentFooter').style.display = 'none';
+            if (currentChapterIndex === null || !currentChapterContent) {
                 return;
             }
 
-            const chapter = bookData.chapters.find(ch => ch.chapter_index === currentChapterIndex);
-            if (!chapter || !chapter.chunks || chapter.chunks.length === 0) {
+            // 分离正文和注释
+            let content = currentChapterContent;
+            const parts = content.split('————————————————————');
+            if (parts.length > 1 && currentView === 'original') {
+                // 原文模式：显示正文部分
+                content = parts[0].trim();
+            } else if (parts.length > 1 && currentView === 'summary') {
+                // 摘要模式：暂时只显示正文（因为txt文件没有摘要）
+                content = parts[0].trim();
+            }
+
+            if (!content) {
                 document.getElementById('contentBody').innerHTML = 
                     '<div class="empty-state">该章节暂无内容</div>';
-                document.getElementById('contentFooter').style.display = 'flex';
-                return;
+            } else {
+                document.getElementById('contentBody').innerHTML = 
+                    `<div class="content-text">${formatText(content)}</div>`;
             }
-
-            // 合并所有chunks的内容
-            let content = '';
-            chapter.chunks.forEach((chunk, index) => {
-                if (currentView === 'original') {
-                    content += chunk.content || '';
-                } else {
-                    content += chunk.summary || '';
-                }
-                if (index < chapter.chunks.length - 1) {
-                    content += '\n\n';
-                }
-            });
-
-            document.getElementById('contentBody').innerHTML = 
-                `<div class="content-text">${formatText(content)}</div>`;
-            
-            // 显示导航按钮
-            document.getElementById('contentFooter').style.display = 'flex';
         }
 
         // 切换视图（原文/摘要）
@@ -468,8 +524,10 @@
             document.getElementById('btnOriginal').classList.toggle('active', view === 'original');
             document.getElementById('btnSummary').classList.toggle('active', view === 'summary');
 
-            // 更新内容
-            updateContent();
+            // 更新内容（如果已加载）
+            if (currentChapterIndex !== null) {
+                updateContent();
+            }
         }
 
         // HTML转义和格式化函数
@@ -494,7 +552,7 @@
             }
 
             const chapters = bookData.chapters;
-            const currentIndex = chapters.findIndex(ch => ch.chapter_index === currentChapterIndex);
+            const currentIndex = chapters.findIndex(ch => ch.index === currentChapterIndex);
             
             // 上一章按钮
             const prevBtn = document.getElementById('btnPrev');
@@ -520,13 +578,13 @@
             }
 
             const chapters = bookData.chapters;
-            const currentIndex = chapters.findIndex(ch => ch.chapter_index === currentChapterIndex);
+            const currentIndex = chapters.findIndex(ch => ch.index === currentChapterIndex);
             
             let targetIndex = currentIndex + direction;
             
             if (targetIndex >= 0 && targetIndex < chapters.length) {
                 const targetChapter = chapters[targetIndex];
-                selectChapter(targetChapter.chapter_index);
+                selectChapter(targetChapter.index);
                 
                 // 滚动到顶部
                 document.getElementById('contentBody').scrollTop = 0;
