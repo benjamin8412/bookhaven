@@ -1,0 +1,216 @@
+{
+  "book_name": "宽容",
+  "total_chapters": 30,
+  "chapters": [
+    {
+      "index": 1,
+      "num": "0001",
+      "title": "第一章　祸起无知",
+      "fileName": "0001_第一章　祸起无知.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 2,
+      "num": "0002",
+      "title": "第二章　古希腊人",
+      "fileName": "0002_第二章　古希腊人.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 3,
+      "num": "0003",
+      "title": "第三章　禁锢的开始",
+      "fileName": "0003_第三章　禁锢的开始.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 4,
+      "num": "0004",
+      "title": "第四章　基督的曙光",
+      "fileName": "0004_第四章　基督的曙光.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 5,
+      "num": "0005",
+      "title": "第五章　牢笼",
+      "fileName": "0005_第五章　牢笼.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 6,
+      "num": "0006",
+      "title": "第六章　纯洁的生活",
+      "fileName": "0006_第六章　纯洁的生活.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 7,
+      "num": "0007",
+      "title": "第七章　宗教审判庭",
+      "fileName": "0007_第七章　宗教审判庭.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 8,
+      "num": "0008",
+      "title": "第八章　漫漫求知路",
+      "fileName": "0008_第八章　漫漫求知路.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 9,
+      "num": "0009",
+      "title": "第九章　向书本宣战",
+      "fileName": "0009_第九章　向书本宣战.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 10,
+      "num": "0010",
+      "title": "第十章　这是一本怎样的历史书籍",
+      "fileName": "0010_第十章　这是一本怎样的历史书籍.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 11,
+      "num": "0011",
+      "title": "第十一章　文艺复兴",
+      "fileName": "0011_第十一章　文艺复兴.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 12,
+      "num": "0012",
+      "title": "第十二章　宗教改革",
+      "fileName": "0012_第十二章　宗教改革.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 13,
+      "num": "0013",
+      "title": "第十三章　伊拉斯谟",
+      "fileName": "0013_第十三章　伊拉斯谟.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 14,
+      "num": "0014",
+      "title": "第十四章　拉伯雷",
+      "fileName": "0014_第十四章　拉伯雷.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 15,
+      "num": "0015",
+      "title": "第十五章　旧事物的新招牌",
+      "fileName": "0015_第十五章　旧事物的新招牌.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 16,
+      "num": "0016",
+      "title": "第十六章　再洗礼教徒",
+      "fileName": "0016_第十六章　再洗礼教徒.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 17,
+      "num": "0017",
+      "title": "第十七章　索兹尼叔侄",
+      "fileName": "0017_第十七章　索兹尼叔侄.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 18,
+      "num": "0018",
+      "title": "第十八章　蒙田",
+      "fileName": "0018_第十八章　蒙田.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 19,
+      "num": "0019",
+      "title": "第十九章　阿米尼斯",
+      "fileName": "0019_第十九章　阿米尼斯.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 20,
+      "num": "0020",
+      "title": "第二十章　布鲁诺",
+      "fileName": "0020_第二十章　布鲁诺.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 21,
+      "num": "0021",
+      "title": "第二十一章　斯宾诺莎",
+      "fileName": "0021_第二十一章　斯宾诺莎.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 22,
+      "num": "0022",
+      "title": "第二十二章　新天国",
+      "fileName": "0022_第二十二章　新天国.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 23,
+      "num": "0023",
+      "title": "第二十三章　太阳王",
+      "fileName": "0023_第二十三章　太阳王.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 24,
+      "num": "0024",
+      "title": "第二十四章　腓特烈大帝",
+      "fileName": "0024_第二十四章　腓特烈大帝.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 25,
+      "num": "0025",
+      "title": "第二十五章　伏尔泰",
+      "fileName": "0025_第二十五章　伏尔泰.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 26,
+      "num": "0026",
+      "title": "第二十六章　百科全书",
+      "fileName": "0026_第二十六章　百科全书.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 27,
+      "num": "0027",
+      "title": "第二十七章　革命的不宽容",
+      "fileName": "0027_第二十七章　革命的不宽容.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 28,
+      "num": "0028",
+      "title": "第二十八章　莱辛",
+      "fileName": "0028_第二十八章　莱辛.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 29,
+      "num": "0029",
+      "title": "第二十九章　汤姆·佩恩",
+      "fileName": "0029_第二十九章　汤姆·佩恩.txt",
+      "hasSummary": true
+    },
+    {
+      "index": 30,
+      "num": "0030",
+      "title": "第三十章　最后的百年",
+      "fileName": "0030_第三十章　最后的百年.txt",
+      "hasSummary": true
+    }
+  ]
+}
